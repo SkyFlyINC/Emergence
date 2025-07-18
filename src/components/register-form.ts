@@ -3,64 +3,110 @@ import { customElement, state } from 'lit/decorators.js'
 
 @customElement('register-form')
 export class RegisterForm extends LitElement {
-  @state() private username = ''
-  @state() private password = ''
-  @state() private email = ''
-  @state() private error = ''
-  @state() private loading = false
+    @state() private username = ''
+    @state() private password = ''
+    @state() private email = ''
+    @state() private error = ''
+    @state() private success = false
+    @state() private loading = false
 
-  createRenderRoot() {
-    return this
-  }
-
-  private async handleRegister(e: Event) {
-    e.preventDefault()
-    this.error = ''
-    this.loading = true
-
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_SERVER}/api/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: this.username,
-          password: this.password,
-          email: this.email
-        })
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        // 注册成功,保存token
-        localStorage.setItem('token', data.token)
-        // 发出注册成功事件
-        this.dispatchEvent(new CustomEvent('register-success', {
-          detail: data.user,
-          bubbles: true,
-          composed: true
-        }))
-      } else {
-        this.error = data.message || '注册失败'
-      }
-    } catch (err) {
-      this.error = '服务器错误'
-    } finally {
-      this.loading = false
+    createRenderRoot() {
+        return this
     }
-  }
 
-  render() {
-    return html`
+    private async handleRegister(e: Event) {
+        e.preventDefault()
+        this.error = ''
+        this.success = false
+        this.loading = true
+
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_SERVER}/api/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: this.username,
+                    password: this.password,
+                    email: this.email
+                })
+            })
+
+            const data = await response.json()
+
+            if (response.ok) {
+              this.success = true
+                // 发出注册成功事件
+                this.dispatchEvent(new CustomEvent('register-success', {
+                    detail: data.user,
+                    bubbles: true,
+                    composed: true
+                }))
+            } else {
+                this.error = data.message || '注册失败'
+            }
+        } catch (err) {
+            this.error = '服务器错误'
+        } finally {
+            this.loading = false
+        }
+    }
+
+    render() {
+        return html`
       <div class="space-y-3">
         <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
           <div class="space-y-3 p-4 md:p-5">
             <h3 class="font-bold text-gray-800 dark:text-white">注册</h3>
-            
+            ${this.success ? html`<div class="space-y-5">
+  <div class="bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert" tabindex="-1" aria-labelledby="hs-bordered-success-style-label">
+    <div class="flex">
+      <div class="shrink-0">
+        <!-- Icon -->
+        <span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-400">
+          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+        </span>
+        <!-- End Icon -->
+      </div>
+      <div class="ms-3">
+        <h3 id="hs-bordered-success-style-label" class="text-gray-800 font-semibold dark:text-white">
+          注册成功.
+        </h3>
+        <p class="text-sm text-gray-700 dark:text-neutral-400">
+          请回到登录页进行登录.
+        </p>
+      </div>
+    </div>
+  </div></div>`:''}
             ${this.error ? html`
-              <div class="text-red-500 text-sm">${this.error}</div>
+              <div class="space-y-5">
+  <div class="bg-red-50 border-s-4 border-red-500 p-4 dark:bg-red-800/30" role="alert" tabindex="-1" aria-labelledby="hs-bordered-red-style-label">
+    <div class="flex">
+      <div class="shrink-0">
+        <!-- Icon -->
+        <span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-red-100 bg-red-200 text-red-800 dark:border-red-900 dark:bg-red-800 dark:text-red-400">
+          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </span>
+        <!-- End Icon -->
+      </div>
+      <div class="ms-3">
+        <h3 id="hs-bordered-red-style-label" class="text-gray-800 font-semibold dark:text-white">
+          错误
+        </h3>
+        <p class="text-sm text-gray-700 dark:text-neutral-400">
+          ${this.error}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
             ` : ''}
 
             <form @submit=${this.handleRegister}>
@@ -151,13 +197,13 @@ export class RegisterForm extends LitElement {
         </div>
       </div>
     `
-  }
+    }
 
-  private _toLogin(e: Event) {
-    e.preventDefault()
-    this.dispatchEvent(new CustomEvent('switch-to-login', {
-      bubbles: true,
-      composed: true
-    }))
-  }
+    private _toLogin(e: Event) {
+        e.preventDefault()
+        this.dispatchEvent(new CustomEvent('switch-to-login', {
+            bubbles: true,
+            composed: true
+        }))
+    }
 }

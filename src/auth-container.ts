@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit'
 import { customElement, state } from 'lit/decorators.js'
-import './components/login'
+import './components/login-form'
 import './components/register-form'
 
 @customElement('auth-container')
