@@ -1,4 +1,4 @@
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const JWT = {
     setToken: (token: string) => {
@@ -27,6 +27,19 @@ const JWT = {
 
         // exp是以秒为单位的时间戳
         return Date.now() < user.exp * 1000;
+    },
+    fetch: (url: string, options: RequestInit = {}): Promise<Response> => {
+        const token = JWT.getToken();
+        const headers = new Headers(options.headers);
+
+        if (token) {
+            headers.set('Authorization', `Bearer ${token}`);
+        }
+
+        return fetch(url, {
+            ...options,
+            headers
+        });
     }
 
 }
