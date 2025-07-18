@@ -1,6 +1,7 @@
 import { LitElement, css, html } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import JWT from '../utils/jwt'
+import { UserUtils } from '../utils/user'
 
 @customElement('login-form')
 export class LoginForm extends LitElement {
@@ -35,7 +36,13 @@ export class LoginForm extends LitElement {
       if (response.ok) {
         // 登录成功,保存token
         JWT.setToken(data.token)
-        // 发出登录成功事件
+        UserUtils.setUserToLocalStorage({
+          id: data.user.id,
+          username: data.user.username,
+          permission: data.user.permission,
+          email: data.user.email,
+        })
+          // 发出登录成功事件
         this.dispatchEvent(new CustomEvent('login-success', {
           detail: data.user,
           bubbles: true,

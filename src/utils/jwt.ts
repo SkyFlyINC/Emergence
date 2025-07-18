@@ -1,4 +1,8 @@
 import { jwtDecode } from 'jwt-decode';
+export interface decodedJWT {
+  id:number,
+  username:string,
+  permission: number}
 
 const JWT = {
     setToken: (token: string) => {
@@ -40,7 +44,19 @@ const JWT = {
             ...options,
             headers
         });
-    }
+    },
+    getUserInformationFromToken: () => {
+        const token = JWT.getToken();
+        if (!token) return null;
+
+        try {
+            const decoded: decodedJWT = jwtDecode(token);
+            return decoded
+        } catch (error) {
+            JWT.removeToken(); // 如果token无效则移除
+            return null;
+        }
+    },
 
 }
 
