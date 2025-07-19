@@ -199,6 +199,18 @@ apexcharts@^4.5.0:
     "@svgdotjs/svg.select.js" "^4.0.1"
     "@yr/monotone-cubic-spline" "^1.0.3"
 
+apexcharts@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.npmjs.org/apexcharts/-/apexcharts-5.2.0.tgz"
+  integrity sha512-BZ+v4Wqf4BKVRKBatVghDVu9vu2SXhl/F7ujT2awnf7Zv6RT39FQWtAAV3bpH+G5c8IADw0PyOKG00+rN1UoNg==
+  dependencies:
+    "@svgdotjs/svg.draggable.js" "^3.0.4"
+    "@svgdotjs/svg.filter.js" "^3.0.8"
+    "@svgdotjs/svg.js" "^3.2.4"
+    "@svgdotjs/svg.resize.js" "^2.0.2"
+    "@svgdotjs/svg.select.js" "^4.0.1"
+    "@yr/monotone-cubic-spline" "^1.0.3"
+
 chownr@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/chownr/-/chownr-3.0.0.tgz"
@@ -299,7 +311,7 @@ just-extend@^5.0.0:
 
 jwt-decode@^4.0.0:
   version "4.0.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/jwt-decode/-/jwt-decode-4.0.0.tgz"
+  resolved "https://registry.npmjs.org/jwt-decode/-/jwt-decode-4.0.0.tgz"
   integrity sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==
 
 lightningcss-win32-x64-msvc@1.30.1:
@@ -349,6 +361,11 @@ lit@^3.3.0:
     "@lit/reactive-element" "^2.1.0"
     lit-element "^4.2.0"
     lit-html "^3.3.0"
+
+lodash@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 magic-string@^0.30.17:
   version "0.30.17"

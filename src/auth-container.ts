@@ -15,6 +15,11 @@ export class AuthContainer extends LitElement {
     super.connectedCallback()
     this.addEventListener('switch-to-register', () => this.showLogin = false)
     this.addEventListener('switch-to-login', () => this.showLogin = true)
+    //监听登陆成功，然后跳转
+    this.addEventListener('login-success', () => {
+      // 这里可以添加跳转逻辑，比如跳转到主页
+      window.location.href = '/main'; // 假设主页的路径是 /home
+    });
   }
 
   render() {
