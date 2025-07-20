@@ -1,6 +1,6 @@
 import { LitElement, html,} from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { JWT } from '../utils/jwt';
+import { JWT } from './utils/jwt';
 
 @customElement('course-manager')
 export class MainNavigator extends LitElement {

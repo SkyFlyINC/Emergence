@@ -1,5 +1,7 @@
 //
 // Personal data structure
+import JWT from "../utils/jwt";
+import { UserUtils } from "../utils/user";
 import type { Course } from "./course";
 
 /**
@@ -17,7 +19,6 @@ import type { Course } from "./course";
 
 export interface PersonalData {
   name: string;
-  email: string;
   phone: string;
   avatar: string;
   gender: string;
@@ -61,4 +62,21 @@ export interface StudentPersonalData extends PersonalData{
   unpayment: number;
   payment: number;
   totalpayment: number;
+}
+
+export const PersonalDataUtils = {
+  //auth.user-info.md
+  //返回值为User类型
+  fetchPersonalData: async (id: number): Promise<PersonalData | null> => {
+    try {
+      UserUtils.fetchUserData(id).then(user => {
+        if (!user) return null;
+        return user.data ? JSON.parse(user.data) as PersonalData : null;
+        });
+    } catch (error) {
+      console.error('Error fetching personal data:', error);
+      return null;
+    }
+    return null;
+  }
 }
