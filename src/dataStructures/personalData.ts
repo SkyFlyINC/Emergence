@@ -9,6 +9,7 @@ import type { Course } from "./course";
  * @property {string} phone - 电话号码。
  * @property {string} avatar - 头像的URL或路径。
  * @property {string} gender - 性别。
+ * @property {string} adrress - 地址。
  * @property {number} id - 唯一标识符。
  * @property {Course[]} courses - 参与的课程列表。
  * @property {number} salary - 薪资。
@@ -20,6 +21,7 @@ export interface PersonalData {
   phone: string;
   avatar: string;
   gender: string;
+  adrress: string;
   id: number;
   courses: Course[];
 }
@@ -45,10 +47,17 @@ export interface Evaluation {
     rate: number;
 }
 
+//成长档案
+export interface EmergenceDoc{
+  time: string;
+  content: string;
+}
+
 export interface StudentPersonalData extends PersonalData{
   birthday: string;
   courses: Course[];
   evaluationsByInstructor: Evaluation[];
+  emergenceDocument: EmergenceDoc[];
   unpayment: number;
   payment: number;
   totalpayment: number;
